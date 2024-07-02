@@ -16,14 +16,14 @@ export default function TableHeading({
           <div>
             <ChevronUpIcon className={
               "w-4 " +
-              (sort_field === "id" &&
+              (sort_field === name &&
                 sort_direction === "asc"
                 ? "text-white"
                 : "")
             } />
             <ChevronDownIcon className={
               "w-4 -mt-2 " +
-              (sort_field === "id" &&
+              (sort_field === name &&
                 sort_direction === "desc"
                 ? "text-white"
                 : "")
