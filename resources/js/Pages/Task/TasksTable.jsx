@@ -51,12 +51,8 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 sortChanged={sortChanged}
               >ID</TableHeading>
               <th className="px-3 py-3">Image</th>
-              {!hideProjectColumn && <TableHeading
-                name="project_id"
-                sort_field={queryParams.sort_field}
-                sort_direction={queryParams.sort_direction}
-                sortChanged={sortChanged}
-              >Project ID</TableHeading>}
+              {!hideProjectColumn && <th className="px-3 py-3">Project</th>}
+
               <TableHeading
                 name="name"
                 sort_field={queryParams.sort_field}
@@ -123,7 +119,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 <td className="px-3 py-2">
                   <img src={task.image_path} alt={`Image for task ${task.id}`} style={{ width: 60 }} />
                 </td>
-                { !hideProjectColumn && <td className="px-3 py-2">{task.project.id}</td>}
+                { !hideProjectColumn && <td className="px-3 py-2">{task.project.name}</td>}
                 <td className="px-3 py-2">{task.name}</td>
                 <td className="px-3 py-2">
                   <span
