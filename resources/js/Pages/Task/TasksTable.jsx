@@ -51,7 +51,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 sortChanged={sortChanged}
               >ID</TableHeading>
               <th className="px-3 py-3">Image</th>
-              {!hideProjectColumn && <th className="px-3 py-3">Project</th>}
+              {!hideProjectColumn && <th className="px-3 py-3">Project Name</th>}
 
               <TableHeading
                 name="name"
