@@ -138,7 +138,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 <td className="px-3 py-2">
                   <span
                     className={
-                      "px-2 py-1 rounded text-white " +
+                      "px-2 py-1 rounded text-nowrap text-white " +
                       TASK_STATUS_CLASS_MAP[task.status]
                     }>
                     {TASK_STATUS_TEXT_MAP[task.status]}
