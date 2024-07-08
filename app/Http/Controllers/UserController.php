@@ -54,8 +54,9 @@ class UserController extends Controller
         $data['email_verified_at'] = time();
         $data['password'] = bcrypt($data['password']);
         User::create($data);
+        $name = $data['name'];
 
-        return to_route('user.index')->with('success', 'User has been created!');
+        return to_route('user.index')->with('success', "User \"$name\" has been created!");
     }
 
     /**

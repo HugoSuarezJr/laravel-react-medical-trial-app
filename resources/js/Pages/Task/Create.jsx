@@ -7,7 +7,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 
-export default function Create({ auth }){
+export default function Create({ auth, projects, users }){
   const {data, setData, post, errors, reset} = useForm({
     image: '',
     name: '',
@@ -30,6 +30,7 @@ export default function Create({ auth }){
         </div>
     }>
       <Head title="Create Task"></Head>
+      {/* <pre>{JSON.stringify(projects, undefined, 2)}</pre> */}
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -47,7 +48,9 @@ export default function Create({ auth }){
                   onChange={(e) => setData("project_id", e.target.value)}
                 >
                   <option value="">Select Project</option>
-                  <option value="ID">TODO</option>
+                  {projects.data.map(project => (
+                    <option value={project.id} key={project.id}>{project.name}</option>
+                  ))}
                 </SelectInput>
                 <InputError message={errors.project_id} className="mt-2"/>
               </div>
@@ -158,7 +161,9 @@ export default function Create({ auth }){
                   onChange={(e) => setData("assigned_user_id", e.target.value)}
                 >
                   <option value="">Select User</option>
-                  <option value="ID">TODO</option>
+                  {users.data.map(user => (
+                    <option value={user.id} key={user.id}>{user.name}</option>
+                  ))}
                 </SelectInput>
                 <InputError message={errors.assigned_user_id} className="mt-2"/>
               </div>
