@@ -25,7 +25,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     Dashboard
                                 </NavLink>
                                 <NavLink href={route('trial.index')} active={route().current('trial.index')}>
-                                    Trials
+                                    All Trials
                                 </NavLink>
                                 <NavLink href={route('patient.index')} active={route().current('patient.index')}>
                                     All Patients
@@ -33,8 +33,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 <NavLink href={route('user.index')} active={route().current('user.index')}>
                                     Users
                                 </NavLink>
-                                <NavLink href={route('patient.myPatients')} active={route().current('patient.myPatients')}>
-                                    My Patients
+                                <NavLink href={route('trial.myTrials')} active={route().current('trial.myTrials')}>
+                                    My Trials
                                 </NavLink>
                             </div>
                         </div>

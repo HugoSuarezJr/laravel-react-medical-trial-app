@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { TRIAL_STATUS_CLASS_MAP, TRIAL_STATUS_TEXT_MAP } from "@/constants";
+import { TRIAL_PRIORITY_CLASS_MAP, TRIAL_PRIORITY_TEXT_MAP, TRIAL_STATUS_CLASS_MAP, TRIAL_STATUS_TEXT_MAP } from "@/constants";
 import { Head, Link } from "@inertiajs/react";
 import PatientsTable from "../Patient/PatientsTable";
 
@@ -38,6 +38,18 @@ export default function Show({ auth, trial, patients = null, queryParams }) {
                     <p className="mt-1">{trial.name}</p>
                   </div>
                   <div className="mt-4">
+                    <label className="font-bold text-lg">Trial Priority</label>
+                    <p className="mt-1">
+                      <span
+                        className={
+                          "px-2 py-1 rounded text-white " +
+                          TRIAL_PRIORITY_CLASS_MAP[trial.priority]
+                        }>
+                        {TRIAL_PRIORITY_TEXT_MAP[trial.priority]}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="mt-4">
                     <label className="font-bold text-lg">Trial Status</label>
                     <p className="mt-1">
                       <span
@@ -56,6 +68,10 @@ export default function Show({ auth, trial, patients = null, queryParams }) {
                 </div>
                 <div>
                   <div>
+                    <label className="font-bold text-lg">Assigned User</label>
+                    <p className="mt-1">{trial.assignedUser.name}</p>
+                  </div>
+                  <div className="mt-4">
                     <label className="font-bold text-lg">Due Date</label>
                     <p className="mt-1">{trial.due_date}</p>
                   </div>

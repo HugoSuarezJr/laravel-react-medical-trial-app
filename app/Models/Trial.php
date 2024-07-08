@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trial extends Model
 {
-    protected $fillable = ['image_path', 'name', 'due_date', 'description', 'status', 'created_by', 'updated_by'];
+    protected $fillable = [
+        'name',
+        'description',
+        'image_path',
+        'status',
+        'priority',
+        'due_date',
+        'assigned_user_id',
+        'created_by',
+        'updated_by',
+    ];
 
     use HasFactory;
 
@@ -24,5 +34,10 @@ class Trial extends Model
     public function updatedBy()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
     }
 }

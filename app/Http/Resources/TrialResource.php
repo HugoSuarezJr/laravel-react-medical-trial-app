@@ -26,6 +26,11 @@ class TrialResource extends JsonResource
             'due_date' => (new Carbon($this->due_date))->format('Y-m-d'),
             'status' => $this->status,
             'image_path' => $this->image_path ? Storage::url($this->image_path) : '',
+
+            'assignedUser' => $this->assignedUser ? new UserResource($this->assignedUser) : null,
+            'assigned_user_id' => $this->assigned_user_id,
+            'priority' => $this->priority,
+
             'createdBy' => new UserResource($this->createdBy),
             'updatedBy' => new UserResource($this->updatedBy),
         ];

@@ -6,7 +6,7 @@ import { TRIAL_STATUS_CLASS_MAP, TRIAL_STATUS_TEXT_MAP } from "@/constants.jsx";
 import { Head, Link, router } from "@inertiajs/react";
 import TableHeading from "@/Components/TableHeading";
 
-export default function Index({ auth, trials, queryParams = null , success}) {
+export default function Index({ auth, trials, queryParams = null , success, filtered = null }) {
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
@@ -16,7 +16,10 @@ export default function Index({ auth, trials, queryParams = null , success}) {
       delete queryParams[name];
     }
 
-    router.get(route('trial.index'), queryParams);
+    if(!filtered){
+      router.get(route('trial.index'), queryParams);
+    }
+    router.get(route("trial." + filtered), queryParams);
   }
 
   const onKeyPress = (name, e) => {
@@ -36,7 +39,10 @@ export default function Index({ auth, trials, queryParams = null , success}) {
       queryParams.sort_field = name;
       queryParams.sort_direction= 'asc';
     }
-    router.get(route("trial.index"), queryParams);
+    if(!filtered){
+      router.get(route('trial.index'), queryParams);
+    }
+    router.get(route("trial." + filtered), queryParams);
   }
 
   const deleteTrial = (trial) => {

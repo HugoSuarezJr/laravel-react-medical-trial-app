@@ -14,9 +14,10 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
+    Route::get('trial/myTrials', [TrialController::class, 'myTrials'])
+        ->name('trial.myTrials');
     Route::resource('trial', TrialController::class);
-    Route::get('patient/myPatients', [PatientController::class, 'myPatients'])
-        ->name('patient.myPatients');
+
     Route::resource('patient', PatientController::class);
     Route::resource('user', UserController::class);
 });

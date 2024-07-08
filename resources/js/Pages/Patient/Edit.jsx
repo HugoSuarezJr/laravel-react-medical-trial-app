@@ -141,44 +141,6 @@ export default function Create({ auth, patient, trials, users }) {
                 </SelectInput>
                 <InputError message={errors.patient_status} className="mt-2"/>
               </div>
-              <div className="mt-4">
-                <InputLabel
-                  htmlFor="patient_priority"
-                  value="Patient Priority"
-                />
-                <SelectInput
-                  name="priority"
-                  id="patient_priority"
-                  value={data.priority}
-                  className="mt-1 block w-full"
-                  onChange={(e) => setData("priority", e.target.value)}
-                >
-                  <option value="">Select Priority</option>
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </SelectInput>
-                <InputError message={errors.priority} className="mt-2"/>
-              </div>
-              <div className="mt-4">
-                <InputLabel
-                  htmlFor="patient_assigned_user"
-                  value="Assigned User"
-                />
-                <SelectInput
-                  name="assigned_user_id"
-                  id="patient_assigned_user"
-                  value={data.assigned_user_id}
-                  className="mt-1 block w-full"
-                  onChange={(e) => setData("assigned_user_id", e.target.value)}
-                >
-                  <option value="">Select User</option>
-                  {users.data.map(user => (
-                    <option value={user.id} key={user.id}>{user.name}</option>
-                  ))}
-                </SelectInput>
-                <InputError message={errors.assigned_user_id} className="mt-2"/>
-              </div>
               <div className="mt-4 text-right">
                 <Link
                   href={route("patient.index")}

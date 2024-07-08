@@ -26,6 +26,8 @@ class StoreTrialRequest extends FormRequest
             'name' => ['required', 'max:255'],
             'image' => ['nullable', 'image'],
             'description' => ['nullable', 'string'],
+            'assigned_user_id' => ['required', 'exists:users,id'],
+            'priority' => ['required', Rule::in(['low', 'medium', 'high'])],
             'due_date' => ['nullable', 'date'],
             'status' => ['required', Rule::in(['pending', 'in_progress', 'completed'])]
         ];

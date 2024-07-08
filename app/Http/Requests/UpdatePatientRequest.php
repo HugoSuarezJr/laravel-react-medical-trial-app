@@ -28,9 +28,7 @@ class UpdatePatientRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'due_date' => ['nullable', 'date'],
             'trial_id' => ['required', 'exists:trials,id'],
-            'assigned_user_id' => ['required', 'exists:users,id'],
             'status' => ['required', Rule::in(['pending', 'in_progress', 'completed'])],
-            'priority' => ['required', Rule::in(['low', 'medium', 'high'])],
         ];
     }
 }

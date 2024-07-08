@@ -38,18 +38,6 @@ export default function Show({ auth, patient }) {
                     <p className="mt-1">{patient.name}</p>
                   </div>
                   <div className="mt-4">
-                    <label className="font-bold text-lg">Patient Priority</label>
-                    <p className="mt-1">
-                      <span
-                        className={
-                          "px-2 py-1 rounded text-white " +
-                          PATIENT_PRIORITY_CLASS_MAP[patient.priority]
-                        }>
-                        {PATIENT_PRIORITY_TEXT_MAP[patient.priority]}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="mt-4">
                     <label className="font-bold text-lg">Patient Status</label>
                     <p className="mt-1">
                       <span
@@ -74,10 +62,6 @@ export default function Show({ auth, patient }) {
                         {patient.trial.name}
                       </Link>
                     </p>
-                  </div>
-                  <div className="mt-4">
-                    <label className="font-bold text-lg">Assigned User</label>
-                    <p className="mt-1">{patient.assignedUser.name}</p>
                   </div>
                   <div className="mt-4">
                     <label className="font-bold text-lg">Due Date</label>

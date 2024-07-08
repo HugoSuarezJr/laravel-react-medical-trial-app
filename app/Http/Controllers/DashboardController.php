@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PatientResource;
-use App\Models\Patient;
+use App\Http\Resources\TrialResource;
+use App\Models\Trial;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,47 +11,47 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $totalPendingPatients = Patient::query()
+        $totalPendingTrials = Trial::query()
             ->where('status', 'pending')
             ->count();
-        $myPendingPatients = Patient::query()
+        $myPendingTrials = Trial::query()
             ->where('status', 'pending')
             ->where('assigned_user_id', $user->id)
             ->count();
 
-        $totalInProgressPatients = Patient::query()
+        $totalInProgressTrials = Trial::query()
             ->where('status', 'in_progress')
             ->count();
-        $myInProgressPatients = Patient::query()
+        $myInProgressTrials = Trial::query()
             ->where('status', 'in_progress')
             ->where('assigned_user_id', $user->id)
             ->count();
 
-        $totalCompletedPatients = Patient::query()
+        $totalCompletedTrials = Trial::query()
             ->where('status', 'completed')
             ->count();
-        $myCompletedPatients = Patient::query()
+        $myCompletedTrials = Trial::query()
             ->where('status', 'completed')
             ->where('assigned_user_id', $user->id)
             ->count();
 
-        $activePatients = Patient::query()
+        $activeTrials = Trial::query()
             ->where('assigned_user_id', $user->id)
             ->whereIn('status', ['pending', 'in_progress'])
             ->limit(10)
             ->get();
-        $activePatients = PatientResource::collection($activePatients);
+        $activeTrials = TrialResource::collection($activeTrials);
 
         return inertia(
             'Dashboard',
             compact(
-                'totalPendingPatients',
-                'myPendingPatients',
-                'totalInProgressPatients',
-                'myInProgressPatients',
-                'totalCompletedPatients',
-                'myCompletedPatients',
-                'activePatients'
+                'totalPendingTrials',
+                'myPendingTrials',
+                'totalInProgressTrials',
+                'myInProgressTrials',
+                'totalCompletedTrials',
+                'myCompletedTrials',
+                'activeTrials'
             )
         );
     }

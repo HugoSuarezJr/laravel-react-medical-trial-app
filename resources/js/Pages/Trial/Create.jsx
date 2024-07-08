@@ -7,7 +7,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 
-export default function Create({ auth }){
+export default function Create({ auth, users }){
   const {data, setData, post, errors, reset} = useForm({
     image: '',
     name: '',
@@ -111,6 +111,42 @@ export default function Create({ auth }){
                   <option value="completed">Completed</option>
                 </SelectInput>
                 <InputError message={errors.trial_status} className="mt-2"/>
+              </div>
+              <div className="mt-4">
+                <InputLabel
+                  htmlFor="trial_priority"
+                  value="Trial Priority"
+                />
+                <SelectInput
+                  name="trial"
+                  id="trial_priority"
+                  className="mt-1 block w-full"
+                  onChange={(e) => setData("priority", e.target.value)}
+                >
+                  <option value="">Select Priority</option>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </SelectInput>
+                <InputError message={errors.priority} className="mt-2"/>
+              </div>
+              <div className="mt-4">
+                <InputLabel
+                  htmlFor="trial_assigned_user"
+                  value="Assigned User"
+                />
+                <SelectInput
+                  name="assigned_user_id"
+                  id="trial_assigned_user"
+                  className="mt-1 block w-full"
+                  onChange={(e) => setData("assigned_user_id", e.target.value)}
+                >
+                  <option value="">Select User</option>
+                  {users.data.map(user => (
+                    <option value={user.id} key={user.id}>{user.name}</option>
+                  ))}
+                </SelectInput>
+                <InputError message={errors.assigned_user_id} className="mt-2"/>
               </div>
               <div className="mt-4 text-right">
                 <Link

@@ -6,8 +6,10 @@ use App\Http\Requests\StoreTrialRequest;
 use App\Http\Requests\UpdateTrialRequest;
 use App\Http\Resources\TrialResource;
 use App\Http\Resources\PatientResource;
+use App\Http\Resources\UserResource;
 use App\Models\Trial;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -48,7 +50,10 @@ class TrialController extends Controller
      */
     public function create()
     {
-        return inertia("Trial/Create");
+        $users = User::query()->orderBy('name')->get();
+        return inertia("Trial/Create", [
+            "users" => UserResource::collection($users)
+        ]);
     }
 
     /**
@@ -95,7 +100,8 @@ class TrialController extends Controller
             'trial' => new TrialResource($trial),
             "patients" => PatientResource::collection($patients),
             'queryParams' => request()->query() ?: null,
-            'success' => session('success')
+            'success' => session('success'),
+            'filtered' => 'show'
         ]);
     }
 
@@ -104,8 +110,10 @@ class TrialController extends Controller
      */
     public function edit(Trial $trial)
     {
+        $users = $users = User::query()->orderBy('name')->get();
         return inertia('Trial/Edit', [
-            'trial' => new TrialResource($trial)
+            'trial' => new TrialResource($trial),
+            'users' => UserResource::collection($users)
         ]);
     }
 
@@ -138,5 +146,36 @@ class TrialController extends Controller
             Storage::disk('public')->deleteDirectory(dirname($trial->image_path));
         }
         return to_route('trial.index')->with('success', "Trial \"$name\" was deleted.");
+    }
+
+
+    /**
+     * Show only the users assigned patients.
+     */
+    public function myTrials(Trial $trial)
+    {
+        $user = auth()->user();
+        $query = Trial::query()->where('assigned_user_id', $user->id);
+
+        $sortField = request("sort_field", 'created_at');
+        $sortDirection = request("sort_direction", 'desc');
+
+        if(request("name")) {
+            $query->where("name", "like", "%". request("name") ."%");
+        }
+        if(request("status")) {
+            $query->where("status", request("status"));
+        }
+
+        $trials = $query->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1);
+
+        return inertia("Trial/Index", [
+            "trials" => TrialResource::collection($trials),
+            'queryParams' => request()->query() ?: null,
+            'success' => session('success'),
+            'filtered' => 'myTrials',
+        ]);
     }
 }

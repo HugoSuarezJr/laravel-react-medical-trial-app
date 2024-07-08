@@ -73,7 +73,7 @@ class PatientController extends Controller
 
         Patient::create($data);
 
-        return to_route('patient.index')->with('success', 'Your patient has been created!');
+        return to_route('patient.index')->with('success', 'Patient has been created!');
     }
 
     /**
@@ -129,34 +129,5 @@ class PatientController extends Controller
             Storage::disk('public')->deleteDirectory(dirname($patient->image_path));
         }
         return to_route('patient.index')->with('success', "Patient \"$name\" was deleted.");
-    }
-
-    /**
-     * Show only the users assigned patients.
-     */
-    public function myPatients(Patient $patient)
-    {
-        $user = auth()->user();
-        $query = Patient::query()->where('assigned_user_id', $user->id);
-
-        $sortField = request("sort_field", 'created_at');
-        $sortDirection = request("sort_direction", 'desc');
-
-        if(request("name")) {
-            $query->where("name", "like", "%". request("name") ."%");
-        }
-        if(request("status")) {
-            $query->where("status", request("status"));
-        }
-
-        $patients = $query->orderBy($sortField, $sortDirection)
-            ->paginate(10)
-            ->onEachSide(1);
-
-        return inertia("Patient/Index", [
-            "patients" => PatientResource::collection($patients),
-            'queryParams' => request()->query() ?: null,
-            'success' => session('success')
-        ]);
     }
 }
