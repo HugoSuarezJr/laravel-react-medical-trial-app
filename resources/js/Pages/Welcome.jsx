@@ -278,7 +278,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                             >
                                                 Herd
                                             </a>{' '}
-                                            help you take your projects to the next level. Pair them with powerful open
+                                            help you take your trials to the next level. Pair them with powerful open
                                             source libraries like{' '}
                                             <a
                                                 href="https://laravel.com/docs/billing"

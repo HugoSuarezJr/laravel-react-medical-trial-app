@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreProjectRequest extends FormRequest
+class UpdatePatientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,10 @@ class StoreProjectRequest extends FormRequest
             'image' => ['nullable', 'image'],
             'description' => ['nullable', 'string'],
             'due_date' => ['nullable', 'date'],
-            'status' => ['required', Rule::in(['pending', 'in_progress', 'completed'])]
+            'trial_id' => ['required', 'exists:trials,id'],
+            'assigned_user_id' => ['required', 'exists:users,id'],
+            'status' => ['required', Rule::in(['pending', 'in_progress', 'completed'])],
+            'priority' => ['required', Rule::in(['low', 'medium', 'high'])],
         ];
     }
 }

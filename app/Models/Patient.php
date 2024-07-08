@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Patient extends Model
 {
     protected $fillable = [
         'name',
@@ -17,14 +17,14 @@ class Task extends Model
         'assigned_user_id',
         'created_by',
         'updated_by',
-        'project_id',
+        'trial_id',
     ];
 
     use HasFactory;
 
-    public function project()
+    public function trial()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Trial::class);
     }
 
     public function assignedUser()

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\TaskResource;
-use App\Models\Task;
+use App\Http\Resources\PatientResource;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,47 +11,47 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $totalPendingTasks = Task::query()
+        $totalPendingPatients = Patient::query()
             ->where('status', 'pending')
             ->count();
-        $myPendingTasks = Task::query()
+        $myPendingPatients = Patient::query()
             ->where('status', 'pending')
             ->where('assigned_user_id', $user->id)
             ->count();
 
-        $totalInProgressTasks = Task::query()
+        $totalInProgressPatients = Patient::query()
             ->where('status', 'in_progress')
             ->count();
-        $myInProgressTasks = Task::query()
+        $myInProgressPatients = Patient::query()
             ->where('status', 'in_progress')
             ->where('assigned_user_id', $user->id)
             ->count();
 
-        $totalCompletedTasks = Task::query()
+        $totalCompletedPatients = Patient::query()
             ->where('status', 'completed')
             ->count();
-        $myCompletedTasks = Task::query()
+        $myCompletedPatients = Patient::query()
             ->where('status', 'completed')
             ->where('assigned_user_id', $user->id)
             ->count();
 
-        $activeTasks = Task::query()
+        $activePatients = Patient::query()
             ->where('assigned_user_id', $user->id)
             ->whereIn('status', ['pending', 'in_progress'])
             ->limit(10)
             ->get();
-        $activeTasks = TaskResource::collection($activeTasks);
+        $activePatients = PatientResource::collection($activePatients);
 
         return inertia(
             'Dashboard',
             compact(
-                'totalPendingTasks',
-                'myPendingTasks',
-                'totalInProgressTasks',
-                'myInProgressTasks',
-                'totalCompletedTasks',
-                'myCompletedTasks',
-                'activeTasks'
+                'totalPendingPatients',
+                'myPendingPatients',
+                'totalInProgressPatients',
+                'myInProgressPatients',
+                'totalCompletedPatients',
+                'myCompletedPatients',
+                'activePatients'
             )
         );
     }

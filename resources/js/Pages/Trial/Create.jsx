@@ -19,17 +19,17 @@ export default function Create({ auth }){
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("project.store"));
+    post(route("trial.store"));
   }
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Create New Project</h2>
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Create New Trial</h2>
         </div>
     }>
-      <Head title="Create Project"></Head>
+      <Head title="Create Trial"></Head>
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -37,11 +37,11 @@ export default function Create({ auth }){
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
               <div>
                 <InputLabel
-                  htmlFor="project_image_path"
-                  value="Project Image"
+                  htmlFor="trial_image_path"
+                  value="Trial Image"
                 />
                 <TextInput
-                  id="project_image_path"
+                  id="trial_image_path"
                   type="file"
                   name="image"
                   className="mt-1 block w-full"
@@ -51,11 +51,11 @@ export default function Create({ auth }){
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="project_name"
-                  value="Project Name"
+                  htmlFor="trial_name"
+                  value="Trial Name"
                 />
                 <TextInput
-                  id="project_name"
+                  id="trial_name"
                   type="text"
                   name="name"
                   value={data.name}
@@ -67,11 +67,11 @@ export default function Create({ auth }){
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="project_description"
-                  value="Project Description"
+                  htmlFor="trial_description"
+                  value="Trial Description"
                 />
                 <TextAreaInput
-                  id="project_description"
+                  id="trial_description"
                   name="description"
                   value={data.description}
                   className="mt-1 block w-full"
@@ -81,11 +81,11 @@ export default function Create({ auth }){
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="project_due_date"
-                  value="Project Deadline"
+                  htmlFor="trial_due_date"
+                  value="Trial Deadline"
                 />
                 <TextInput
-                  id="project_due_date"
+                  id="trial_due_date"
                   type="date"
                   name="due_date"
                   value={data.due_date}
@@ -96,12 +96,12 @@ export default function Create({ auth }){
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="project_status"
-                  value="Project Status"
+                  htmlFor="trial_status"
+                  value="Trial Status"
                 />
                 <SelectInput
                   name="status"
-                  id="project_status"
+                  id="trial_status"
                   className="mt-1 block w-full"
                   onChange={(e) => setData("status", e.target.value)}
                 >
@@ -110,11 +110,11 @@ export default function Create({ auth }){
                   <option value="in_progress">In Progress</option>
                   <option value="completed">Completed</option>
                 </SelectInput>
-                <InputError message={errors.project_status} className="mt-2"/>
+                <InputError message={errors.trial_status} className="mt-2"/>
               </div>
               <div className="mt-4 text-right">
                 <Link
-                  href={route("project.index")}
+                  href={route("trial.index")}
                   className="bg-gray-100 py-2 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2">
                     Cancel
                 </Link>

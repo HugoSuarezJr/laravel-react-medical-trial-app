@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Trial extends Model
 {
     protected $fillable = ['image_path', 'name', 'due_date', 'description', 'status', 'created_by', 'updated_by'];
 
     use HasFactory;
 
-    public function tasks()
+    public function patients()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Patient::class);
     }
 
     public function createdBy()

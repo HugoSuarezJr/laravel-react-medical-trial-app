@@ -2,10 +2,10 @@ import Pagination from "@/Components/Pagination";
 import SelectInput from "@/Components/SelectInput";
 import TableHeading from "@/Components/TableHeading";
 import TextInput from "@/Components/TextInput";
-import { TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT_MAP } from "@/constants";
+import { PATIENT_STATUS_CLASS_MAP, PATIENT_STATUS_TEXT_MAP } from "@/constants";
 import { Link, router } from "@inertiajs/react";
 
-export default function TasksTable({ tasks, queryParams = null, hideProjectColumn = false, success }) {
+export default function PatientsTable({ patients, queryParams = null, hideTrialColumn = false, success }) {
   queryParams = queryParams || {};
 
   const searchFieldChanged = (name, value) => {
@@ -15,7 +15,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
       delete queryParams[name];
     }
 
-    router.get(route('task.index'), queryParams);
+    router.get(route('patient.index'), queryParams);
   };
 
   const onKeyPress = (name, e) => {
@@ -35,14 +35,14 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
       queryParams.sort_field = name;
       queryParams.sort_direction = 'asc';
     }
-    router.get(route("task.index"), queryParams);
+    router.get(route("patient.index"), queryParams);
   };
 
-  const deleteTask = (task) => {
-    if (!window.confirm('Are you sure you want to delete this task?')) {
+  const deletePatient = (patient) => {
+    if (!window.confirm('Are you sure you want to delete this patient?')) {
       return;
     }
-    router.delete(route('task.destroy', task.id));
+    router.delete(route('patient.destroy', patient.id));
   };
 
   return (
@@ -61,7 +61,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
                 sortChanged={sortChanged}
               >ID</TableHeading>
               <th className="px-3 py-3">Image</th>
-              {!hideProjectColumn && <th className="px-3 py-3">Project Name</th>}
+              {!hideTrialColumn && <th className="px-3 py-3">Trial Name</th>}
 
               <TableHeading
                 name="name"
@@ -95,12 +95,12 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
             <tr className="text-nowrap">
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
-              {!hideProjectColumn && <th className="px-3 py-3"></th>}
+              {!hideTrialColumn && <th className="px-3 py-3"></th>}
               <th className="px-3 py-3">
                 <TextInput
                   className="w-full"
                   defaultValue={queryParams.name}
-                  placeholder="Task Name"
+                  placeholder="Patient Name"
                   onBlur={e => searchFieldChanged('name', e.target.value)}
                   onKeyPress={e => onKeyPress('name', e)}
                 />
@@ -123,36 +123,36 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
             </tr>
           </thead>
           <tbody>
-            {tasks.data.map((task) => (
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={task.id}>
-                <td className="px-3 py-2">{task.id}</td>
+            {patients.data.map((patient) => (
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={patient.id}>
+                <td className="px-3 py-2">{patient.id}</td>
                 <td className="px-3 py-2">
-                  <img src={task.image_path} alt={`Image for task ${task.id}`} style={{ width: 60 }} />
+                  <img src={patient.image_path} alt={`Image for patient ${patient.id}`} style={{ width: 60 }} />
                 </td>
-                {!hideProjectColumn && <td className="px-3 py-2">{task.project.name}</td>}
+                {!hideTrialColumn && <td className="px-3 py-2">{patient.trial.name}</td>}
                 <th className="px-3 py-2 hover:underline text-gray-100">
-                  <Link href={route("task.show", task.id)}>
-                    {task.name}
+                  <Link href={route("patient.show", patient.id)}>
+                    {patient.name}
                   </Link>
                 </th>
                 <td className="px-3 py-2">
                   <span
                     className={
                       "px-2 py-1 rounded text-nowrap text-white " +
-                      TASK_STATUS_CLASS_MAP[task.status]
+                      PATIENT_STATUS_CLASS_MAP[patient.status]
                     }>
-                    {TASK_STATUS_TEXT_MAP[task.status]}
+                    {PATIENT_STATUS_TEXT_MAP[patient.status]}
                   </span>
                 </td>
-                <td className="px-3 py-2">{task.created_at}</td>
-                <td className="px-3 py-2">{task.due_date}</td>
-                <td className="px-3 py-2">{task.createdBy.name}</td>
+                <td className="px-3 py-2">{patient.created_at}</td>
+                <td className="px-3 py-2">{patient.due_date}</td>
+                <td className="px-3 py-2">{patient.createdBy.name}</td>
                 <td className="px-3 py-2 text-nowrap">
-                  <Link href={route("task.edit", task.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1">
+                  <Link href={route("patient.edit", patient.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1">
                     Edit
                   </Link>
                   <button
-                    onClick={(e) => deleteTask(task)}
+                    onClick={(e) => deletePatient(patient)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1">
                     Delete
                   </button>
@@ -162,7 +162,7 @@ export default function TasksTable({ tasks, queryParams = null, hideProjectColum
           </tbody>
         </table>
       </div>
-      <Pagination links={tasks.meta.links}></Pagination>
+      <Pagination links={patients.meta.links}></Pagination>
     </>
   );
 }

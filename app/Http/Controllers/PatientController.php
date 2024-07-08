@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
-use App\Http\Resources\ProjectResource;
-use App\Http\Resources\TaskResource;
+use App\Http\Requests\StorePatientRequest;
+use App\Http\Requests\UpdatePatientRequest;
+use App\Http\Resources\TrialResource;
+use App\Http\Resources\PatientResource;
 use App\Http\Resources\UserResource;
-use App\Models\Project;
-use App\Models\Task;
+use App\Models\Trial;
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class TaskController extends Controller
+class PatientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $query = Task::query();
+        $query = Patient::query();
 
         $sortField = request("sort_field", 'created_at');
         $sortDirection = request("sort_direction", 'desc');
@@ -33,12 +33,12 @@ class TaskController extends Controller
             $query->where("status", request("status"));
         }
 
-        $tasks = $query->orderBy($sortField, $sortDirection)
+        $patients = $query->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
 
-        return inertia("Task/Index", [
-            "tasks" => TaskResource::collection($tasks),
+        return inertia("Patient/Index", [
+            "patients" => PatientResource::collection($patients),
             'queryParams' => request()->query() ?: null,
             'success' => session('success')
         ]);
@@ -49,10 +49,10 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $projects = Project::query()->orderBy('name')->get();
+        $trials = Trial::query()->orderBy('name')->get();
         $users = User::query()->orderBy('name')->get();
-        return inertia("Task/Create", [
-            "projects" => ProjectResource::collection($projects),
+        return inertia("Patient/Create", [
+            "trials" => TrialResource::collection($trials),
             "users" => UserResource::collection($users)
         ]);
     }
@@ -60,7 +60,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskRequest $request)
+    public function store(StorePatientRequest $request)
     {
         $data = $request->validated();
         /** @var $image \Illuminate\Http\UploadedFile */
@@ -68,34 +68,34 @@ class TaskController extends Controller
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
         if($image) {
-            $data['image_path'] = $image->store('task-/'.Str::random(), 'public');
+            $data['image_path'] = $image->store('patient-/'.Str::random(), 'public');
         }
 
-        Task::create($data);
+        Patient::create($data);
 
-        return to_route('task.index')->with('success', 'Your task has been created!');
+        return to_route('patient.index')->with('success', 'Your patient has been created!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(Patient $patient)
     {
-        return Inertia('Task/Show', [
-            'task' => new TaskResource($task)
+        return Inertia('Patient/Show', [
+            'patient' => new PatientResource($patient)
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit(Patient $patient)
     {
-        $projects = Project::query()->orderBy('name')->get();
+        $trials = Trial::query()->orderBy('name')->get();
         $users = User::query()->orderBy('name')->get();
-        return inertia("Task/Edit", [
-            'task' => new TaskResource($task),
-            "projects" => ProjectResource::collection($projects),
+        return inertia("Patient/Edit", [
+            'patient' => new PatientResource($patient),
+            "trials" => TrialResource::collection($trials),
             "users" => UserResource::collection($users)
         ]);
     }
@@ -103,41 +103,41 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(UpdatePatientRequest $request, Patient $patient)
     {
         $data = $request->validated();
         $data['updated_by'] = Auth::id();
         $image = $data['image'] ?? null;
         if($image) {
-            if($task->image_path){
-                Storage::disk('public')->deleteDirectory(dirname($task->image_path));
+            if($patient->image_path){
+                Storage::disk('public')->deleteDirectory(dirname($patient->image_path));
             }
-            $data['image_path'] = $image->store('task-/'.Str::random(), 'public');
+            $data['image_path'] = $image->store('patient-/'.Str::random(), 'public');
         }
-        $task->update($data);
-        return to_route('task.index')->with('success', "Task \"$task->name\" was updated.");
+        $patient->update($data);
+        return to_route('patient.index')->with('success', "Patient \"$patient->name\" was updated.");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(Patient $patient)
     {
-        $name = $task->name;
-        $task->delete();
-        if($task->image_path){
-            Storage::disk('public')->deleteDirectory(dirname($task->image_path));
+        $name = $patient->name;
+        $patient->delete();
+        if($patient->image_path){
+            Storage::disk('public')->deleteDirectory(dirname($patient->image_path));
         }
-        return to_route('task.index')->with('success', "Task \"$name\" was deleted.");
+        return to_route('patient.index')->with('success', "Patient \"$name\" was deleted.");
     }
 
     /**
-     * Show only the users assigned tasks.
+     * Show only the users assigned patients.
      */
-    public function myTasks(Task $task)
+    public function myPatients(Patient $patient)
     {
         $user = auth()->user();
-        $query = Task::query()->where('assigned_user_id', $user->id);
+        $query = Patient::query()->where('assigned_user_id', $user->id);
 
         $sortField = request("sort_field", 'created_at');
         $sortDirection = request("sort_direction", 'desc');
@@ -149,12 +149,12 @@ class TaskController extends Controller
             $query->where("status", request("status"));
         }
 
-        $tasks = $query->orderBy($sortField, $sortDirection)
+        $patients = $query->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
 
-        return inertia("Task/Index", [
-            "tasks" => TaskResource::collection($tasks),
+        return inertia("Patient/Index", [
+            "patients" => PatientResource::collection($patients),
             'queryParams' => request()->query() ?: null,
             'success' => session('success')
         ]);

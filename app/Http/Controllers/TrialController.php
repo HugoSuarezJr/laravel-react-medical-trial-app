@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProjectRequest;
-use App\Http\Requests\UpdateProjectRequest;
-use App\Http\Resources\ProjectResource;
-use App\Http\Resources\TaskResource;
-use App\Models\Project;
-use App\Models\Task;
+use App\Http\Requests\StoreTrialRequest;
+use App\Http\Requests\UpdateTrialRequest;
+use App\Http\Resources\TrialResource;
+use App\Http\Resources\PatientResource;
+use App\Models\Trial;
+use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
-class ProjectController extends Controller
+class TrialController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $query = Project::query();
+        $query = Trial::query();
 
         $sortField = request("sort_field", 'created_at');
         $sortDirection = request("sort_direction", 'desc');
@@ -32,12 +32,12 @@ class ProjectController extends Controller
             $query->where("status", request("status"));
         }
 
-        $projects = $query->orderBy($sortField, $sortDirection)
+        $trials = $query->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
 
-        return inertia("Project/Index", [
-            "projects" => ProjectResource::collection($projects),
+        return inertia("Trial/Index", [
+            "trials" => TrialResource::collection($trials),
             'queryParams' => request()->query() ?: null,
             'success' => session('success')
         ]);
@@ -48,13 +48,13 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return inertia("Project/Create");
+        return inertia("Trial/Create");
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProjectRequest $request)
+    public function store(StoreTrialRequest $request)
     {
         $data = $request->validated();
         /** @var $image \Illuminate\Http\UploadedFile */
@@ -62,20 +62,20 @@ class ProjectController extends Controller
         $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
         if($image) {
-            $data['image_path'] = $image->store('project-/'.Str::random(), 'public');
+            $data['image_path'] = $image->store('trial-/'.Str::random(), 'public');
         }
 
-        Project::create($data);
+        Trial::create($data);
 
-        return to_route('project.index')->with('success', 'Your project has been created!');
+        return to_route('trial.index')->with('success', 'Your trial has been created!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function show(Trial $trial)
     {
-        $query = $project->tasks();
+        $query = $trial->patients();
 
         $sortField = request("sort_field", 'created_at');
         $sortDirection = request("sort_direction", 'desc');
@@ -87,13 +87,13 @@ class ProjectController extends Controller
             $query->where("status", request("status"));
         }
 
-        $tasks = $query->orderBy($sortField, $sortDirection)
+        $patients = $query->orderBy($sortField, $sortDirection)
             ->paginate(10)
             ->onEachSide(1);
 
-        return Inertia('Project/Show', [
-            'project' => new ProjectResource($project),
-            "tasks" => TaskResource::collection($tasks),
+        return Inertia('Trial/Show', [
+            'trial' => new TrialResource($trial),
+            "patients" => PatientResource::collection($patients),
             'queryParams' => request()->query() ?: null,
             'success' => session('success')
         ]);
@@ -102,41 +102,41 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(Trial $trial)
     {
-        return inertia('Project/Edit', [
-            'project' => new ProjectResource($project)
+        return inertia('Trial/Edit', [
+            'trial' => new TrialResource($trial)
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(UpdateTrialRequest $request, Trial $trial)
     {
         $data = $request->validated();
         $data['updated_by'] = Auth::id();
         $image = $data['image'] ?? null;
         if($image) {
-            if($project->image_path){
-                Storage::disk('public')->deleteDirectory(dirname($project->image_path));
+            if($trial->image_path){
+                Storage::disk('public')->deleteDirectory(dirname($trial->image_path));
             }
-            $data['image_path'] = $image->store('project-/'.Str::random(), 'public');
+            $data['image_path'] = $image->store('trial-/'.Str::random(), 'public');
         }
-        $project->update($data);
-        return to_route('project.index')->with('success', "Project \"$project->name\" was updated.");
+        $trial->update($data);
+        return to_route('trial.index')->with('success', "Trial \"$trial->name\" was updated.");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(Trial $trial)
     {
-        $name = $project->name;
-        $project->delete();
-        if($project->image_path){
-            Storage::disk('public')->deleteDirectory(dirname($project->image_path));
+        $name = $trial->name;
+        $trial->delete();
+        if($trial->image_path){
+            Storage::disk('public')->deleteDirectory(dirname($trial->image_path));
         }
-        return to_route('project.index')->with('success', "Project \"$name\" was deleted.");
+        return to_route('trial.index')->with('success', "Trial \"$name\" was deleted.");
     }
 }

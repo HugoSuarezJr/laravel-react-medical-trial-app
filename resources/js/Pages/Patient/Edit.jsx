@@ -7,69 +7,69 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 
-export default function Create({ auth, task, projects, users }) {
+export default function Create({ auth, patient, trials, users }) {
   const { data, setData, post, errors, reset } = useForm({
     image: '',
-    name: task.name || '',
-    status: task.status || '',
-    description: task.description || '',
-    due_date: task.due_date || '',
-    project_id: task.project_id || '',
-    priority: task.priority || '',
-    assigned_user_id: task.assigned_user_id || '',
+    name: patient.name || '',
+    status: patient.status || '',
+    description: patient.description || '',
+    due_date: patient.due_date || '',
+    trial_id: patient.trial_id || '',
+    priority: patient.priority || '',
+    assigned_user_id: patient.assigned_user_id || '',
     _method: 'PUT'
   });
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    post(route("task.update", task.id));
+    post(route("patient.update", patient.id));
   };
   return (
     <AuthenticatedLayout
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Edit task "{task.name}"</h2>
+          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Edit patient "{patient.name}"</h2>
         </div>
       }>
-      <Head title="Create Task"></Head>
+      <Head title="Create Patient"></Head>
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <form onSubmit={onSubmit}
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-              {task.image_path && (
+              {patient.image_path && (
                 <div className="mb-4">
-                  <img src={task.image_path} className="w-64 rounded" />
+                  <img src={patient.image_path} className="w-64 rounded" />
                 </div>
               )}
               <div>
                 <InputLabel
-                  htmlFor="task_project"
-                  value="Project"
+                  htmlFor="patient_trial"
+                  value="Trial"
                 />
                 <SelectInput
-                  name="project_id"
-                  id="task_project"
-                  value={data.project_id}
+                  name="trial_id"
+                  id="patient_trial"
+                  value={data.trial_id}
                   className="mt-1 block w-full"
-                  onChange={(e) => setData("project_id", e.target.value)}
+                  onChange={(e) => setData("trial_id", e.target.value)}
                 >
-                  <option value="">Select Project</option>
-                  {projects.data.map(project => (
-                    <option value={project.id} key={project.id}>{project.name}</option>
+                  <option value="">Select Trial</option>
+                  {trials.data.map(trial => (
+                    <option value={trial.id} key={trial.id}>{trial.name}</option>
                   ))}
                 </SelectInput>
-                <InputError message={errors.project_id} className="mt-2"/>
+                <InputError message={errors.trial_id} className="mt-2"/>
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="task_image_path"
-                  value="Task Image"
+                  htmlFor="patient_image_path"
+                  value="Patient Image"
                 />
                 <TextInput
-                  id="task_image_path"
+                  id="patient_image_path"
                   type="file"
                   name="image"
                   className="mt-1 block w-full"
@@ -79,11 +79,11 @@ export default function Create({ auth, task, projects, users }) {
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="task_name"
-                  value="Task Name"
+                  htmlFor="patient_name"
+                  value="Patient Name"
                 />
                 <TextInput
-                  id="task_name"
+                  id="patient_name"
                   type="text"
                   name="name"
                   value={data.name}
@@ -95,11 +95,11 @@ export default function Create({ auth, task, projects, users }) {
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="task_description"
-                  value="Task Description"
+                  htmlFor="patient_description"
+                  value="Patient Description"
                 />
                 <TextAreaInput
-                  id="task_description"
+                  id="patient_description"
                   name="description"
                   value={data.description}
                   className="mt-1 block w-full"
@@ -109,11 +109,11 @@ export default function Create({ auth, task, projects, users }) {
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="task_due_date"
-                  value="Task Deadline"
+                  htmlFor="patient_due_date"
+                  value="Patient Deadline"
                 />
                 <TextInput
-                  id="task_due_date"
+                  id="patient_due_date"
                   type="date"
                   name="due_date"
                   value={data.due_date}
@@ -124,12 +124,12 @@ export default function Create({ auth, task, projects, users }) {
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="task_status"
-                  value="Task Status"
+                  htmlFor="patient_status"
+                  value="Patient Status"
                 />
                 <SelectInput
                   name="status"
-                  id="task_status"
+                  id="patient_status"
                   value={data.status}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("status", e.target.value)}
@@ -139,16 +139,16 @@ export default function Create({ auth, task, projects, users }) {
                   <option value="in_progress">In Progress</option>
                   <option value="completed">Completed</option>
                 </SelectInput>
-                <InputError message={errors.task_status} className="mt-2"/>
+                <InputError message={errors.patient_status} className="mt-2"/>
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="task_priority"
-                  value="Task Priority"
+                  htmlFor="patient_priority"
+                  value="Patient Priority"
                 />
                 <SelectInput
                   name="priority"
-                  id="task_priority"
+                  id="patient_priority"
                   value={data.priority}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("priority", e.target.value)}
@@ -162,12 +162,12 @@ export default function Create({ auth, task, projects, users }) {
               </div>
               <div className="mt-4">
                 <InputLabel
-                  htmlFor="task_assigned_user"
+                  htmlFor="patient_assigned_user"
                   value="Assigned User"
                 />
                 <SelectInput
                   name="assigned_user_id"
-                  id="task_assigned_user"
+                  id="patient_assigned_user"
                   value={data.assigned_user_id}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("assigned_user_id", e.target.value)}
@@ -181,7 +181,7 @@ export default function Create({ auth, task, projects, users }) {
               </div>
               <div className="mt-4 text-right">
                 <Link
-                  href={route("task.index")}
+                  href={route("patient.index")}
                   className="bg-gray-100 py-2 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2">
                   Cancel
                 </Link>

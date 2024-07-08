@@ -1,9 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { USER_STATUS_CLASS_MAP, USER_STATUS_TEXT_MAP } from "@/constants";
 import { Head } from "@inertiajs/react";
-import TasksTable from "../Task/TasksTable";
+import PatientsTable from "../Patient/PatientsTable";
 
-export default function Show({auth, user, tasks = null, queryParams }) {
+export default function Show({auth, user, patients = null, queryParams }) {
   return (
     <AuthenticatedLayout
       user={auth.user}
@@ -80,9 +80,9 @@ export default function Show({auth, user, tasks = null, queryParams }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900 dark:text-gray-100">
               {
-                tasks.data.length ? (<TasksTable tasks={tasks} queryParams={queryParams} hideUserColumn={true}></TasksTable>) :
+                patients.data.length ? (<PatientsTable patients={patients} queryParams={queryParams} hideUserColumn={true}></PatientsTable>) :
                 (<div className="bg-white dark:bg-gray-600 py-2 px-4 text-white rounded text-center">
-                  <h2>There are currently no tasks for this user!</h2>
+                  <h2>There are currently no patients for this user!</h2>
                 </div>)
               }
             </div>

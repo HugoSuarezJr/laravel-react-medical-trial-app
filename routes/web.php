@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TrialController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,10 +14,10 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    Route::resource('project', ProjectController::class);
-    Route::get('task/myTasks', [TaskController::class, 'myTasks'])
-        ->name('task.myTasks');
-    Route::resource('task', TaskController::class);
+    Route::resource('trial', TrialController::class);
+    Route::get('patient/myPatients', [PatientController::class, 'myPatients'])
+        ->name('patient.myPatients');
+    Route::resource('patient', PatientController::class);
     Route::resource('user', UserController::class);
 });
 
