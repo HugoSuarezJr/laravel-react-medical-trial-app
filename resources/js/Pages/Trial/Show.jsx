@@ -22,7 +22,7 @@ export default function Show({ auth, trial, patients = null, queryParams }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div>
               <img
-                src={trial.image_path}
+                src={trial.image_path === '' ? ("https://qtxasset.com/cdn-cgi/image/w=850,h=478,f=auto,fit=crop,g=0.5x0.5/https://qtxasset.com/quartz/qcloud5/media/image/GettyImages-1299105199%20%281%29.jpg?VersionId=CY3sD9nsk7EaRZnl_yAqvKSpCPG8_7L9") : (trial.image_path)}
                 alt={"Image for " + trial.name}
                 className="w-full h-64 object-cover"></img>
             </div>

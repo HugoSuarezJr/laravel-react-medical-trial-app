@@ -39,11 +39,9 @@ export default function Create({ auth, patient, trials, users }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <form onSubmit={onSubmit}
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-              {patient.image_path && (
-                <div className="mb-4">
-                  <img src={patient.image_path} className="w-64 rounded" />
-                </div>
-              )}
+              <div className="mb-4">
+                <img src={patient.image_path === '' ? ("https://media.muckrack.com/profile/images/1926094/sabrina-cipolletta.png.256x256_q100_crop-smart.png") : (patient.image_path)} className="w-64 rounded" />
+              </div>
               <div>
                 <InputLabel
                   htmlFor="patient_trial"
@@ -58,10 +56,10 @@ export default function Create({ auth, patient, trials, users }) {
                 >
                   <option value="">Select Trial</option>
                   {trials.data.map(trial => (
-                    <option value={trial.id} key={trial.id}>{trial.name}</option>
+                    <option value={trial.id} key={trial.id}>{trial.name} #{trial.id}</option>
                   ))}
                 </SelectInput>
-                <InputError message={errors.trial_id} className="mt-2"/>
+                <InputError message={errors.trial_id} className="mt-2" />
               </div>
               <div className="mt-4">
                 <InputLabel
@@ -75,7 +73,7 @@ export default function Create({ auth, patient, trials, users }) {
                   className="mt-1 block w-full"
                   onChange={e => setData('image', e.target.files[0])}
                 />
-                <InputError message={errors.image} className="mt-2"/>
+                <InputError message={errors.image} className="mt-2" />
               </div>
               <div className="mt-4">
                 <InputLabel
@@ -91,7 +89,7 @@ export default function Create({ auth, patient, trials, users }) {
                   isFocused={true}
                   onChange={e => setData('name', e.target.value)}
                 />
-                <InputError message={errors.name} className="mt-2"/>
+                <InputError message={errors.name} className="mt-2" />
               </div>
               <div className="mt-4">
                 <InputLabel
@@ -105,7 +103,7 @@ export default function Create({ auth, patient, trials, users }) {
                   className="mt-1 block w-full"
                   onChange={e => setData('description', e.target.value)}
                 />
-                <InputError message={errors.description} className="mt-2"/>
+                <InputError message={errors.description} className="mt-2" />
               </div>
               <div className="mt-4">
                 <InputLabel
@@ -120,7 +118,7 @@ export default function Create({ auth, patient, trials, users }) {
                   className="mt-1 block w-full"
                   onChange={e => setData('due_date', e.target.value)}
                 />
-                <InputError message={errors.due_date} className="mt-2"/>
+                <InputError message={errors.due_date} className="mt-2" />
               </div>
               <div className="mt-4">
                 <InputLabel
@@ -139,7 +137,7 @@ export default function Create({ auth, patient, trials, users }) {
                   <option value="in_progress">In Progress</option>
                   <option value="completed">Completed</option>
                 </SelectInput>
-                <InputError message={errors.patient_status} className="mt-2"/>
+                <InputError message={errors.patient_status} className="mt-2" />
               </div>
               <div className="mt-4 text-right">
                 <Link

@@ -38,11 +38,13 @@ export default function Create({ auth, trial, users }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <form onSubmit={onSubmit}
               className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-              {trial.image_path && (
-                <div className="mb-4">
-                  <img src={trial.image_path} className="w-64 rounded" />
-                </div>
-              )}
+              <div className="mb-4">
+                <img src={
+                  trial.image_path === '' ? ("https://qtxasset.com/cdn-cgi/image/w=850,h=478,f=auto,fit=crop,g=0.5x0.5/https://qtxasset.com/quartz/qcloud5/media/image/GettyImages-1299105199%20%281%29.jpg?VersionId=CY3sD9nsk7EaRZnl_yAqvKSpCPG8_7L9") :
+                  (trial.image_path)
+                }
+                className="w-64 rounded" />
+              </div>
               <div>
                 <InputLabel
                   htmlFor="trial_image_path"
@@ -138,7 +140,7 @@ export default function Create({ auth, trial, users }) {
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
                 </SelectInput>
-                <InputError message={errors.priority} className="mt-2"/>
+                <InputError message={errors.priority} className="mt-2" />
               </div>
               <div className="mt-4">
                 <InputLabel
@@ -157,7 +159,7 @@ export default function Create({ auth, trial, users }) {
                     <option value={user.id} key={user.id}>{user.name}</option>
                   ))}
                 </SelectInput>
-                <InputError message={errors.assigned_user_id} className="mt-2"/>
+                <InputError message={errors.assigned_user_id} className="mt-2" />
               </div>
               <div className="mt-4 text-right">
                 <Link

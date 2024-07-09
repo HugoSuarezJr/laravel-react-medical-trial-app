@@ -17,7 +17,16 @@ class TrialFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(),
+            'name' => fake()->randomElement([
+                'Cure for COVID',
+                'Medicine for Arthritis',
+                'Cure for Alphaviruses',
+                'Trial on Asthma Medicine',
+                'Pain relief for Heartburn',
+                'Possible Cure for Diptheria',
+                'Trial Drug for Kidney Cancer',
+
+            ]),
             'description' => fake()->realText(),
             'due_date' => fake()->dateTimeBetween('now', '+1 year'),
             'status' => fake()->randomElement(['pending', 'in_progress', 'completed']),
@@ -25,7 +34,7 @@ class TrialFactory extends Factory
             'priority' => fake()->randomElement(['low', 'medium', 'high']),
             'assigned_user_id' => 1,
 
-            'image_path' => fake()->imageUrl(),
+            'image_path' => '',
             'created_by' => 1,
             'updated_by' => 1,
             'created_at' => time(),

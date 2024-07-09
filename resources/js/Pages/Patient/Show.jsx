@@ -20,11 +20,11 @@ export default function Show({ auth, patient }) {
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-            <div>
+            <div className="flex justify-center">
               <img
-                src={patient.image_path}
+                src={patient.image_path === '' ? ("https://media.muckrack.com/profile/images/1926094/sabrina-cipolletta.png.256x256_q100_crop-smart.png") : (patient.image_path)}
                 alt={"Image for " + patient.name}
-                className="w-full h-64 object-cover"></img>
+                className="m-6 w-64 rounded-full"></img>
             </div>
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <div className="grid gap-1 grid-cols-2 mt-2">
