@@ -61,8 +61,7 @@ export default function PatientsTable({ patients, queryParams = null, hideTrialC
                 sort_direction={queryParams.sort_direction}
                 sortChanged={sortChanged}
               >ID</TableHeading>
-              <th className="px-3 py-3">Image</th>
-              {!hideTrialColumn && <th className="px-3 py-3">Trial Name</th>}
+              <th className="px-3 py-3"></th>
 
               <TableHeading
                 name="name"
@@ -70,6 +69,7 @@ export default function PatientsTable({ patients, queryParams = null, hideTrialC
                 sort_direction={queryParams.sort_direction}
                 sortChanged={sortChanged}
               >Name</TableHeading>
+              {!hideTrialColumn && <th className="px-3 py-3">Trial Name</th>}
               <TableHeading
                 name="status"
                 sort_field={queryParams.sort_field}
@@ -96,7 +96,6 @@ export default function PatientsTable({ patients, queryParams = null, hideTrialC
             <tr className="text-nowrap">
               <th className="px-3 py-3"></th>
               <th className="px-3 py-3"></th>
-              {!hideTrialColumn && <th className="px-3 py-3"></th>}
               <th className="px-3 py-3">
                 <TextInput
                   className="w-full"
@@ -106,6 +105,7 @@ export default function PatientsTable({ patients, queryParams = null, hideTrialC
                   onKeyPress={e => onKeyPress('name', e)}
                 />
               </th>
+              {!hideTrialColumn && <th className="px-3 py-3"></th>}
               <th className="px-3 py-3">
                 <SelectInput
                   className="w-full"
@@ -130,12 +130,12 @@ export default function PatientsTable({ patients, queryParams = null, hideTrialC
                 <td className="px-3 py-2">
                   <img src={patient.image_path === '' ? ("https://media.muckrack.com/profile/images/1926094/sabrina-cipolletta.png.256x256_q100_crop-smart.png") : (patient.image_path)} alt={`Image for patient ${patient.id}`} style={{ width: 50 }} className="rounded-full"/>
                 </td>
-                {!hideTrialColumn && <td className="px-3 py-2">{patient.trial.name}</td>}
                 <th className="px-3 py-2 hover:underline text-gray-100">
                   <Link href={route("patient.show", patient.id)}>
                     {patient.name}
                   </Link>
                 </th>
+                {!hideTrialColumn && <td className="px-3 py-2">{patient.trial.name}</td>}
                 <td className="px-3 py-2">
                   <span
                     className={

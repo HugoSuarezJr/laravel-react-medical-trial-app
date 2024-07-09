@@ -24,7 +24,7 @@ export default function Show({ auth, trial, patients = null, queryParams }) {
               <img
                 src={trial.image_path === '' ? ("https://qtxasset.com/cdn-cgi/image/w=850,h=478,f=auto,fit=crop,g=0.5x0.5/https://qtxasset.com/quartz/qcloud5/media/image/GettyImages-1299105199%20%281%29.jpg?VersionId=CY3sD9nsk7EaRZnl_yAqvKSpCPG8_7L9") : (trial.image_path)}
                 alt={"Image for " + trial.name}
-                className="w-full h-64 object-cover"></img>
+                className="w-full lg:h-80 object-cover object-top"></img>
             </div>
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <div className="grid gap-1 grid-cols-2 mt-2">

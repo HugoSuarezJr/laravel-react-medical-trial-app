@@ -146,7 +146,7 @@ export default function Index({ auth, trials, queryParams = null , success, filt
                       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={trial.id}>
                         <td className="px-3 py-2">{trial.id}</td>
                         <td className="px-3 py-2">
-                          <img src={trial.image_path === '' ? ("https://qtxasset.com/cdn-cgi/image/w=850,h=478,f=auto,fit=crop,g=0.5x0.5/https://qtxasset.com/quartz/qcloud5/media/image/GettyImages-1299105199%20%281%29.jpg?VersionId=CY3sD9nsk7EaRZnl_yAqvKSpCPG8_7L9") : (trial.image_path)} alt={`Image for trial ${trial.id}`} style={{ width: 60}}/>
+                          <img src={trial.image_path === '' ? (`https://picsum.photos/id/${trial.id}/400/200`) : (trial.image_path)} alt={`Image for trial ${trial.id}`} style={{ width: 60}}/>
                         </td>
                         <th className="px-3 py-2 hover:underline text-gray-100 text-nowrap">
                           <Link href={route("trial.show", trial.id)}>
