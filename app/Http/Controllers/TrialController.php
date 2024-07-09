@@ -150,7 +150,7 @@ class TrialController extends Controller
 
 
     /**
-     * Show only the users assigned patients.
+     * Show only the users assigned trials.
      */
     public function myTrials(Trial $trial)
     {
