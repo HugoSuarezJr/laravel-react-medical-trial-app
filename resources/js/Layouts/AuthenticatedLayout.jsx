@@ -107,6 +107,18 @@ export default function AuthenticatedLayout({ user, header, children }) {
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('trial.index')} active={route().current('trial.index')}>
+                            All Trials
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('patient.index')} active={route().current('patient.index')}>
+                            All Patients
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('user.index')} active={route().current('user.index')}>
+                            Users
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('trial.myTrials')} active={route().current('trial.myTrials')}>
+                            My Trials
+                        </ResponsiveNavLink>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
