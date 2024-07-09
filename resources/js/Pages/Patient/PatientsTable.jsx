@@ -48,6 +48,7 @@ export default function PatientsTable({ patients, queryParams = null, hideTrialC
   return (
     <>
       <div className="overflow-auto">
+      {hideTrialColumn && (<h2 className="text-2xl text-gray-400 mb-2">Patients</h2>)}
         {success && (
           <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">{success}</div>
         )}
