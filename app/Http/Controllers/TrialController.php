@@ -140,6 +140,7 @@ class TrialController extends Controller
      */
     public function destroy(Trial $trial)
     {
+        $trial->patients()->delete();
         $name = $trial->name;
         $trial->delete();
         if($trial->image_path){
