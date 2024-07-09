@@ -49,7 +49,7 @@ export default function Create({ auth, trials, users }){
                 >
                   <option value="">Select Trial</option>
                   {trials.data.map(trial => (
-                    <option value={trial.id} key={trial.id}>{trial.name}</option>
+                    <option value={trial.id} key={trial.id}>{trial.name} #{trial.id}</option>
                   ))}
                 </SelectInput>
                 <InputError message={errors.trial_id} className="mt-2"/>

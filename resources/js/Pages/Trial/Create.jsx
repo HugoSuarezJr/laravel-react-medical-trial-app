@@ -133,7 +133,7 @@ export default function Create({ auth, users }){
               <div className="mt-4">
                 <InputLabel
                   htmlFor="trial_assigned_user"
-                  value="Assigned User"
+                  value="Assigned Researcher"
                 />
                 <SelectInput
                   name="assigned_user_id"
@@ -141,7 +141,7 @@ export default function Create({ auth, users }){
                   className="mt-1 block w-full"
                   onChange={(e) => setData("assigned_user_id", e.target.value)}
                 >
-                  <option value="">Select User</option>
+                  <option value="">Select Researcher</option>
                   {users.data.map(user => (
                     <option value={user.id} key={user.id}>{user.name}</option>
                   ))}

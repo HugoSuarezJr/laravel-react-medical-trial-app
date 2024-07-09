@@ -31,7 +31,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     All Patients
                                 </NavLink>
                                 <NavLink href={route('user.index')} active={route().current('user.index')}>
-                                    Users
+                                    Researchers
                                 </NavLink>
                                 <NavLink href={route('trial.myTrials')} active={route().current('trial.myTrials')}>
                                     My Trials
@@ -114,7 +114,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             All Patients
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('user.index')} active={route().current('user.index')}>
-                            Users
+                            Researchers
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('trial.myTrials')} active={route().current('trial.myTrials')}>
                             My Trials

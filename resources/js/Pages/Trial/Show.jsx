@@ -68,7 +68,7 @@ export default function Show({ auth, trial, patients = null, queryParams }) {
                 </div>
                 <div>
                   <div>
-                    <label className="font-bold text-lg">Assigned User</label>
+                    <label className="font-bold text-lg">Assigned Researcher</label>
                     <p className="mt-1">{trial.assignedUser.name}</p>
                   </div>
                   <div className="mt-4">
