@@ -6,6 +6,8 @@ use App\Models\Trial;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Testing\TestResponse;
+
 
 class TrialsTest extends TestCase
 {
@@ -25,17 +27,27 @@ class TrialsTest extends TestCase
             'updated_by' => 1
         ];
 
-        $trial = Trial::create($data);
+        Trial::create($data);
 
         $this->assertDatabaseHas('trials', $data);
-        $this->assertEquals('Test Trial', $trial->name);
-        $this->assertEquals('This is a test Trial', $trial->description);
-        $this->assertEquals('in_progress', $trial->status);
-        $this->assertEquals('high', $trial->priority);
-        $this->assertEquals(null, $trial->image_path);
-        $this->assertEquals(null, $trial->due_date);
-        $this->assertEquals(1, $trial->created_by);
-        $this->assertEquals(1, $trial->updated_by);
-        $this->assertEquals(1, $trial->assigned_user_id);
+    }
+
+    public function test_it_can_store_a_trial()
+    {
+        $data = [
+            'name' => 'Test Trial',
+            'description' => 'This is a test Trial',
+            'status' => 'in_progress',
+            'priority' => 'high',
+            'assigned_user_id' => 1,
+        ];
+
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post(route('trial.store'), $data);
+
+        $this->assertEquals(302, $response->getStatusCode());
+        $response->assertRedirectToRoute('trial.index');
+        $this->assertDatabaseHas('trials', $data);
     }
 }
