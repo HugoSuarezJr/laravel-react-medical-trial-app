@@ -50,4 +50,14 @@ class TrialsTest extends TestCase
         $response->assertRedirectToRoute('trial.index');
         $this->assertDatabaseHas('trials', $data);
     }
+
+    public function test_it_can_have_assigned_user()
+    {
+        $user = User::factory()->create();
+
+        $trial = Trial::factory()->create(['assigned_user_id' => $user->id]);
+
+        $this->assertTrue(Trial::all()->contains('assigned_user_id', $user->id));
+    }
+
 }
