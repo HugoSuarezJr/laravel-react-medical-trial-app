@@ -60,4 +60,15 @@ class TrialsTest extends TestCase
         $this->assertTrue(Trial::all()->contains('assigned_user_id', $user->id));
     }
 
+    public function test_it_can_fetch_trials()
+    {
+        $user = User::factory()->create();
+
+        $trials = Trial::factory()->count(3)->create(['assigned_user_id' => $user->id]);
+
+        $response = $this->actingAs($user)->get('/trial');
+
+        $response->assertStatus(200)
+            ->assertJsonCount(3);
+    }
 }
