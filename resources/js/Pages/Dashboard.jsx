@@ -16,9 +16,10 @@ export default function Dashboard({ auth, totalPendingTrials, myPendingTrials, t
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <h1 className='text-amber-500 text-2xl font-semibold'>Pending Trials</h1>
               <p className='text-lg'>
-                <span className='mr-2'>{myPendingTrials}</span>
-                /
-                <span className='ml-2'>{totalPendingTrials}</span>
+                <span className='mr-1'>{myPendingTrials}</span>
+                out of
+                <span className='mx-1'>{totalPendingTrials}</span>
+                total pending
               </p>
             </div>
           </div>
@@ -26,9 +27,10 @@ export default function Dashboard({ auth, totalPendingTrials, myPendingTrials, t
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <h1 className='text-blue-500 text-2xl font-semibold'>In Progress Trials</h1>
               <p className='text-lg'>
-                <span className='mr-2'>{myInProgressTrials}</span>
-                /
-                <span className='ml-2'>{totalInProgressTrials}</span>
+                <span className='mr-1'>{myInProgressTrials}</span>
+                out of
+                <span className='mx-1'>{totalInProgressTrials}</span>
+                total in progress
               </p>
             </div>
           </div>
@@ -36,9 +38,10 @@ export default function Dashboard({ auth, totalPendingTrials, myPendingTrials, t
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <h1 className='text-green-500 text-2xl font-semibold'>Completed Trials</h1>
               <p className='text-lg'>
-                <span className='mr-2'>{myCompletedTrials}</span>
-                /
-                <span className='ml-2'>{totalCompletedTrials}</span>
+                <span className='mr-1'>{myCompletedTrials}</span>
+                out of
+                <span className='mx-1'>{totalCompletedTrials}</span>
+                total completed
               </p>
             </div>
           </div>
